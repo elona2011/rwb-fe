@@ -1,28 +1,41 @@
-import { Form, Input, Button, Checkbox } from 'antd';
-import axios from 'axios';
+import { Form, Input, Button, Checkbox, message, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.css';
+import { useAuth } from '../auth'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useHistory,
+    Redirect
+} from "react-router-dom";
+import axios from 'axios'
+import { useState, useEffect } from 'react';
 
 const Login = () => {
-    const onFinish = ({ username, password }: { username: string, password: string }) => {
-        let data = new FormData()
-        data.append('name', username)
-        data.append('password', password)
-        axios({
-            method: 'post',
-            url: '/tasks/login',
-            data,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(res => {
-            console.log(res.data)
-            if(res.data === 'Success'){
-                
-            }
-        })
+    let auth = useAuth()
+    let history = useHistory()
 
+    const onFinish = ({ username, password }: { username: string, password: string }) => {
+        auth.signin(username, password, () => {
+            history.push('/taskBoard')
+        }, () => {
+            message.error('密码错误')
+        })
     };
+    let [captchaimg, setCaptchaimg] = useState<string>()
+    useEffect(() => {
+        axios.get('/tasks/getcaptcha', {
+            responseType: 'blob'
+        }).then(res => {
+            console.log(res)
+
+            // captchaimg = res.data
+            // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(res.data)));
+            setCaptchaimg(URL.createObjectURL(res.data))
+        })
+    }, [])
 
     return (
         <Form
@@ -46,6 +59,22 @@ const Login = () => {
                     type="password"
                     placeholder="密码"
                 />
+            </Form.Item>
+            <Form.Item label="验证码">
+                <Row gutter={8}>
+                    <Col span={12}>
+                        <Form.Item
+                            name="captcha"
+                            noStyle
+                            rules={[{ required: true, message: '请输入验证码' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <img src={captchaimg}></img>
+                    </Col>
+                </Row>
             </Form.Item>
             {/* <Form.Item>
                 <Form.Item name="remember" valuePropName="checked" noStyle>
