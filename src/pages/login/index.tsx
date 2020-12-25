@@ -17,11 +17,11 @@ const Login = () => {
     let auth = useAuth()
     let history = useHistory()
 
-    const onFinish = ({ username, password }: { username: string, password: string }) => {
-        auth.signin(username, password, () => {
-            history.push('/taskBoard')
-        }, () => {
-            message.error('密码错误')
+    const onFinish = ({ username, password, captcha }: { username: string, password: string, captcha: string }) => {
+        auth.signin(username, password, captcha, () => {
+            history.push('/user/taskboard')
+        }, (d: string) => {
+            message.error(d)
         })
     };
     let [captchaimg, setCaptchaimg] = useState<string>()
@@ -29,13 +29,16 @@ const Login = () => {
         axios.get('/tasks/getcaptcha', {
             responseType: 'blob'
         }).then(res => {
-            console.log(res)
-
-            // captchaimg = res.data
-            // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(res.data)));
             setCaptchaimg(URL.createObjectURL(res.data))
         })
     }, [])
+    const refresh = () => {
+        axios.get('/tasks/refreshcaptcha', {
+            responseType: 'blob'
+        }).then(res => {
+            setCaptchaimg(URL.createObjectURL(res.data))
+        })
+    }
 
     return (
         <Form
@@ -60,7 +63,8 @@ const Login = () => {
                     placeholder="密码"
                 />
             </Form.Item>
-            <Form.Item label="验证码">
+
+            {(captchaimg && <Form.Item label="验证码">
                 <Row gutter={8}>
                     <Col span={12}>
                         <Form.Item
@@ -72,10 +76,10 @@ const Login = () => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <img src={captchaimg}></img>
+                        <img src={captchaimg} onClick={refresh}></img>
                     </Col>
                 </Row>
-            </Form.Item>
+            </Form.Item>)}
             {/* <Form.Item>
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Remember me</Checkbox>

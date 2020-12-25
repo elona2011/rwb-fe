@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import 'antd/dist/antd.css';
 import Login from './pages/login'
-import Taskboard from './pages/taskBoard'
+import LayoutMain from './pages/layout'
 import { ProvideAuth, PrivateRoute } from './pages/auth'
 
 function App() {
@@ -27,8 +27,8 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
-              <PrivateRoute path="/taskboard">
-                <Taskboard />
+              <PrivateRoute path="/user">
+                <LayoutMain />
               </PrivateRoute>
             </Switch>
           </div>
@@ -37,9 +37,5 @@ function App() {
     </div>
   );
 }
-
-
-
-
 
 export default App;

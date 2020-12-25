@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useEffect, useContext, useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,9 +9,16 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 
-const authContext = createContext<{ user: string, signin: Function }>({
-    user: '',
-    signin: () => { }
+function getCookie(name: string) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+    return ''
+}
+
+const authContext = createContext<{ user: string, signin: Function, loginUser: Function }>({
+    user: getCookie('name'),
+    signin: () => { },
+    loginUser: () => { }
 });
 
 const useAuth = () => {
@@ -41,12 +48,13 @@ const ProvideAuth = ({ children }: { children: React.ReactNode }) => {
 }
 
 const useProvideAuth = () => {
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState(getCookie('name'));
 
-    const signin = (username: string, password: string, success: Function, fail: Function) => {
+    const signin = (username: string, password: string, captcha: string, success: Function, fail: Function) => {
         let data = new FormData()
         data.append('name', username)
         data.append('password', password)
+        data.append('captcha', captcha)
         axios({
             method: 'post',
             url: '/tasks/login',
@@ -63,7 +71,7 @@ const useProvideAuth = () => {
         }).catch(rej => {
             if (rej.response.status === 401) {
                 setUser('');
-                fail()
+                fail(rej.response.data)
             }
         })
     };
@@ -71,11 +79,15 @@ const useProvideAuth = () => {
     const signout = () => {
         setUser('')
     }
+    const loginUser = (u: string) => {
+        setUser(u)
+    }
 
     return {
         user,
         signin,
-        signout
+        signout,
+        loginUser
     };
 }
 
@@ -87,6 +99,11 @@ interface Props {
 
 function PrivateRoute({ children, ...rest }: Props) {
     let auth = useAuth();
+    // useEffect(() => {
+    //     axios.get('/tasks/isLogin').then(res => {
+    //         auth.loginUser(res.data.result)
+    //     })
+    // })
     return (
         <Route
             {...rest}
