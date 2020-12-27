@@ -1,9 +1,10 @@
 import { Layout, Menu, Breadcrumb, } from 'antd';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
-import SiderLeft from '../sider'
-import TaskBoard from '../taskBoard'
+import SiderLeft from '../sider/sider'
+import TaskBoard from '../taskBoard/TaskBoard'
 import NewTask from '../newTask'
-import MyClient from '../myClient'
+import MyOrder from '../myOrder/myOrder'
+import MyAccount from '../myAccount/myAccount'
 
 const LayoutMain = () => {
     let { path, url } = useRouteMatch()
@@ -17,8 +18,11 @@ const LayoutMain = () => {
                 <Route exact path={`${path}/newtask`}>
                     <NewTask></NewTask>
                 </Route>
-                <Route exact path={`${path}/myclient`}>
-                    <MyClient></MyClient>
+                <Route exact path={`${path}/myorders`}>
+                    <MyOrder></MyOrder>
+                </Route>
+                <Route exact path={`${path}/account`}>
+                    <MyAccount></MyAccount>
                 </Route>
             </Switch>
         </Layout>
