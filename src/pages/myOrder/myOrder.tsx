@@ -15,18 +15,39 @@ const columns = [
         key: 'sitename',
     },
     {
-        title: '积分',
+        title: '我的积分',
+        dataIndex: 'allpoints',
+        key: 'allpoints',
+    },
+    {
+        title: '用户积分',
         dataIndex: 'points',
         key: 'points',
+    },
+    {
+        title: '比例',
+        dataIndex: 'percentage',
+        key: 'percentage',
     },
     {
         title: '订单名',
         dataIndex: 'ordername',
         key: 'ordername',
     },
-
-
 ];
+
+interface order {
+    'Appid': string,
+    'date': string,
+    id: number,
+    orderid: string,
+    ordername: string,
+    percentage: string,
+    percentageNum: number,
+    points: number,
+    allpoints: string,
+    sitename: string,
+}
 
 const Task = () => {
     const [data, setData] = useState([])
@@ -37,14 +58,20 @@ const Task = () => {
         }).then(res => {
             console.log(res.data)
             if (res.data.code === 0) {
-                setData(res.data.result)
+                let result = res.data.result
+                result.forEach((n: order) => {
+                    n.percentageNum = parseInt(n.percentage)
+                    n.allpoints = (n.points * 100 / n.percentageNum).toFixed(1)
+                    n.percentage += '%'
+                })
+                setData(result)
             }
         })
     }, [])
 
     return (
         <div>
-            <Table columns={columns} dataSource={data} rowKey={'id'}/>
+            <Table columns={columns} dataSource={data} rowKey={'id'} />
         </div>
     )
 }
