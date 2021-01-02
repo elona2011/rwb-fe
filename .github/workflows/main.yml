@@ -47,15 +47,6 @@ jobs:
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
           script: |
-            tar xvf build.tar
+            tar xvf /root/www/build.tar --directory /root/www
             rm -rf /root/www/zrb
             mv /root/www/build /root/www/zrb
-      # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-#       - name: Run a multi-line script
-#         run: |
-#           echo Add other actions to build,
-#           echo test, and deploy your project.
