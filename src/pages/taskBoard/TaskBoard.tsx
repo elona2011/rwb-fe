@@ -42,6 +42,11 @@ const Task = () => {
             key: 'date',
         },
         {
+            title: '上传图片',
+            dataIndex: 'qrImage',
+            key: 'qrImage',
+        },
+        {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
