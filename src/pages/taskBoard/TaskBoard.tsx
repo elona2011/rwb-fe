@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { UploadOutlined } from '@ant-design/icons';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
+import QrUpload from './QrUpload'
 
 interface task {
     id: number,
@@ -48,33 +49,7 @@ const Task = () => {
                 <Space size="middle">
                     <a href={`http://proxy.xlcmll.top:36912/Task/${record.Appid}?uid=${record.Appid}`} target="_blank" rel="noreferrer">任务地址</a>
                     {/* <a href={`http://u.zrb.net/Task/${record.Appid}?uid=${record.Appid}`} target="_blank" rel="noreferrer">任务地址</a> */}
-                    <Upload
-                        name="avatar"
-                        beforeUpload={() => false}
-                        fileList={fileList}
-                        onChange={(info) => {
-               
-                            setFileList([info.file])
-                            let data = new FormData()
-                            data.append('taskid', record.id + '');
-                            data.append('filename', info.file.name);
-                            // @ts-ignore zhushi
-                            data.append('qrimage', info.file);
-                            axios({
-                                method: 'post',
-                                url: '/tasks/addqrimage',
-                                data,
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).then(res => {
-                                if (res.data.code === 0) {
-
-                                }
-                            })
-                        }}>
-                        <Button icon={<UploadOutlined />}>上传二维码</Button>
-                    </Upload>
+                    <QrUpload taskid={record.id + ''}></QrUpload>
                     <a onClick={() => handleDel(record.id)}>删除</a>
                 </Space>
             ),
