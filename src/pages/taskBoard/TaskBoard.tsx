@@ -47,7 +47,7 @@ const Task = () => {
             key: 'qrImage',
         },
         {
-            title: '操作',
+            title: '操作(二维码上传需1分钟生效)',
             dataIndex: 'action',
             key: 'action',
             render: (text: string, record: task) => (
