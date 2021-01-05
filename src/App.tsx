@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import 'antd/dist/antd.css';
 import Login from './pages/login'
+import LoginUser from './pages/loginUser/loginUser'
 import LayoutMain from './pages/layout'
 import { ProvideAuth, PrivateRoute } from './pages/auth'
 import { Spin, Space } from 'antd';
@@ -48,6 +49,9 @@ function App() {
               <Switch>
                 <Route path="/login">
                   <Login />
+                </Route>
+                <Route path="/loginuser">
+                  <LoginUser />
                 </Route>
                 <PrivateRoute path="/user">
                   <LayoutMain />

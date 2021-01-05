@@ -52,7 +52,7 @@ const Task = () => {
             key: 'action',
             render: (text: string, record: task) => (
                 <Space size="middle">
-                    <a href={`http://proxy.xlcmll.top:36912/Task/${record.Appid}?uid=${record.Appid}`} target="_blank" rel="noreferrer">任务地址</a>
+                    <a href={`http://proxy.xlcmll.top:36912/Task/${record.Appid}`} target="_blank" rel="noreferrer">任务地址</a>
                     {/* <a href={`http://u.zrb.net/Task/${record.Appid}?uid=${record.Appid}`} target="_blank" rel="noreferrer">任务地址</a> */}
                     <QrUpload taskid={record.id + ''}></QrUpload>
                     <a onClick={() => handleDel(record.id)}>删除</a>
