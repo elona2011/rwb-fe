@@ -5,6 +5,16 @@ import { useHistory } from 'react-router-dom';
 
 const columns = [
     {
+        title: '任务名',
+        dataIndex: 'sitename',
+        key: 'sitename',
+    },
+    {
+        title: 'appid',
+        dataIndex: 'appid',
+        key: 'appid',
+    },
+    {
         title: '用户名',
         dataIndex: 'name',
         key: 'name',
@@ -18,11 +28,6 @@ const columns = [
         title: '访问次数',
         dataIndex: 'loginNum',
         key: 'loginNum',
-    },
-    {
-        title: 'appid',
-        dataIndex: 'appid',
-        key: 'appid',
     },
     {
         title: '最后登陆时间',
