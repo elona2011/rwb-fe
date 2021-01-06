@@ -16,8 +16,8 @@ const columns = [
     },
     {
         title: '我的积分',
-        dataIndex: 'allpoints',
-        key: 'allpoints',
+        dataIndex: 'pointsShare',
+        key: 'pointsShare',
     },
     {
         title: '用户积分',
@@ -45,7 +45,7 @@ interface order {
     percentage: string,
     percentageNum: number,
     points: number,
-    allpoints: string,
+    pointsShare: string,
     sitename: string,
 }
 
@@ -61,7 +61,6 @@ const Task = () => {
                 let result = res.data.result
                 result.forEach((n: order) => {
                     n.percentageNum = parseInt(n.percentage)
-                    n.allpoints = (n.points * 100 / n.percentageNum).toFixed(1)
                     n.percentage += '%'
                 })
                 setData(result)
