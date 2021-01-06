@@ -3,6 +3,7 @@ import { Route, useRouteMatch, Switch } from 'react-router-dom';
 import SiderLeft from '../sider/sider'
 import TaskBoard from '../taskBoard/TaskBoard'
 import NewTask from '../newTask'
+import Players from '../players/players'
 import MyOrder from '../myOrder/myOrder'
 import MyAccount from '../myAccount/myAccount'
 
@@ -17,6 +18,9 @@ const LayoutMain = () => {
                 </Route>
                 <Route exact path={`${path}/newtask`}>
                     <NewTask></NewTask>
+                </Route>
+                <Route exact path={`${path}/players`}>
+                    <Players></Players>
                 </Route>
                 <Route exact path={`${path}/myorders`}>
                     <MyOrder></MyOrder>

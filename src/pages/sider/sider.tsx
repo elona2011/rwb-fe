@@ -37,14 +37,17 @@ const SiderLeft = () => {
                 history.push('/user/taskboard')
                 break
             case '2':
-                history.push('/user/myorders')
+                history.push('/user/players')
                 break
             case '3':
+                history.push('/user/myorders')
+                break
+            case '4':
                 history.push('/user/account')
                 break
         }
     }
-   
+
     return (
         <Sider collapsible>
             <div className="logo" />
@@ -53,9 +56,12 @@ const SiderLeft = () => {
                     任务
                     </Menu.Item>
                 <Menu.Item key="2" icon={<DesktopOutlined />}>
+                    用户
+                    </Menu.Item>
+                <Menu.Item key="3" icon={<DesktopOutlined />}>
                     订单
                     </Menu.Item>
-                <Menu.Item key="3" icon={<FileOutlined />}>
+                <Menu.Item key="4" icon={<FileOutlined />}>
                     我的账户
                     </Menu.Item>
             </Menu>
