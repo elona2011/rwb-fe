@@ -43,6 +43,9 @@ const SiderLeft = () => {
                 history.push('/user/myorders')
                 break
             case '4':
+                history.push('/user/myorders2')
+                break
+            case '5':
                 history.push('/user/account')
                 break
         }
@@ -59,9 +62,12 @@ const SiderLeft = () => {
                     用户
                     </Menu.Item>
                 <Menu.Item key="3" icon={<DesktopOutlined />}>
-                    订单
+                    一级订单
                     </Menu.Item>
-                <Menu.Item key="4" icon={<FileOutlined />}>
+                <Menu.Item key="4" icon={<DesktopOutlined />}>
+                    二级订单
+                    </Menu.Item>
+                <Menu.Item key="5" icon={<FileOutlined />}>
                     我的账户
                     </Menu.Item>
             </Menu>

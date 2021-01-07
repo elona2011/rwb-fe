@@ -5,6 +5,7 @@ import TaskBoard from '../taskBoard/TaskBoard'
 import NewTask from '../newTask'
 import Players from '../players/players'
 import MyOrder from '../myOrder/myOrder'
+import MyOrder2 from '../myOrder/myOrder2'
 import MyAccount from '../myAccount/myAccount'
 
 const LayoutMain = () => {
@@ -24,6 +25,9 @@ const LayoutMain = () => {
                 </Route>
                 <Route exact path={`${path}/myorders`}>
                     <MyOrder></MyOrder>
+                </Route>
+                <Route exact path={`${path}/myorders2`}>
+                    <MyOrder2></MyOrder2>
                 </Route>
                 <Route exact path={`${path}/account`}>
                     <MyAccount></MyAccount>
