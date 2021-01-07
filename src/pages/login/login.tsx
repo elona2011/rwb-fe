@@ -11,11 +11,12 @@ import {
     Redirect
 } from "react-router-dom";
 import axios from 'axios'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 
 const Login = () => {
     let auth = useAuth()
     let history = useHistory()
+    const [form] = Form.useForm()
 
     const onFinish = ({ username, password, captcha }: { username: string, password: string, captcha: string }) => {
         auth.signin(username, password, captcha, () => {
@@ -40,9 +41,37 @@ const Login = () => {
         })
     }
 
+    const register = (e: MouseEvent) => {
+        let params = new URL(document.location.href).searchParams
+        const code = params.get('code')
+        if (code === null) {
+            message.error('缺少邀请码')
+        } else {
+            let data = new FormData()
+            data.append('name', form.getFieldValue('username'))
+            data.append('password', form.getFieldValue('password'))
+            data.append('code', code)
+            axios({
+                method: 'post',
+                url: '/tasks/register',
+                data,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
+                if (res.data.code !== 0) {
+                    message.error(res.data.result)
+                } else {
+                    message.success(res.data.result)
+                }
+            })
+        }
+    }
+
     return (
         <Form
             name="normal_login"
+            form={form}
             className="login-form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -59,7 +88,7 @@ const Login = () => {
             >
                 <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
+                    // type="password"
                     placeholder="密码"
                 />
             </Form.Item>
@@ -93,7 +122,13 @@ const Login = () => {
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
                     登陆
-            </Button>
+                </Button>
+                {/* Or <a href="">register now!</a> */}
+            </Form.Item>
+            <Form.Item>
+                <Button type="primary" className="login-form-button" onClick={register}>
+                    注册（需要邀请码）
+                </Button>
                 {/* Or <a href="">register now!</a> */}
             </Form.Item>
         </Form>

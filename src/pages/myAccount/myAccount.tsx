@@ -18,6 +18,7 @@ interface task {
 const Account = () => {
     const history = useHistory()
     let [availableMoney, setAvailableMoney] = useState('0')
+    let [register, setRegister] = useState('')
 
     const logout = (event: MouseEvent) => {
         history.push('/login')
@@ -35,7 +36,8 @@ const Account = () => {
                 if (res.data.code !== 0) {
                     message.error(res.data.result)
                 } else if (res.data.code === 0) {
-                    setAvailableMoney((res.data.result / 100).toFixed(2))
+                    setAvailableMoney((res.data.result.money / 100).toFixed(2))
+                    setRegister(`http://zrb.xlcmll.top:36912/login?code=${res.data.result.inviteCode}`)
                 }
             }
         })
@@ -70,6 +72,12 @@ const Account = () => {
             initialValues={{ remember: true }}
             onFinish={onFinish}
         >
+            <Form.Item
+                name="money"
+                label="我的邀请地址"
+            >
+                <a href={register} target="_blank" rel="noreferrer">{register}</a>
+            </Form.Item>
             <Form.Item
                 name="money"
                 label="可提现金额"
