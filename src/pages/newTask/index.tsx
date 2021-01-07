@@ -62,8 +62,8 @@ const Login = () => {
             name="normal_login"
             // className="login-form"
             initialValues={{
-                sitename: 'c1',
-                QICQ: '99999',
+                sitename: '赚点零花钱',
+                QICQ: '',
                 balanceName: '积分',
                 balanceRate: '100',
                 percentage: '90',
@@ -80,9 +80,9 @@ const Login = () => {
             <Form.Item
                 label="客服QQ"
                 name="QICQ"
-                rules={[{ required: true, message: '请输入客服QQ!' }]}
+                rules={[{ required: true, message: '请输入你的QQ!' }]}
             >
-                <Input />
+                <Input placeholder="请输入你的QQ"/>
             </Form.Item>
             <Form.Item
                 label="虚拟币单位"
