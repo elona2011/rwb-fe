@@ -5,39 +5,34 @@ import { useHistory } from 'react-router-dom';
 
 const columns = [
     {
-        title: '时间',
-        dataIndex: 'date',
-        key: 'date',
-    },
-    {
         title: '任务名',
         dataIndex: 'sitename',
         key: 'sitename',
     },
     {
-        title: '比例',
-        dataIndex: 'percentage',
-        key: 'percentage',
-    },
-    {
-        title: '我的积分',
-        dataIndex: 'pointsShare',
-        key: 'pointsShare',
-    },
-    {
-        title: '用户积分',
-        dataIndex: 'points',
-        key: 'points',
+        title: 'appid',
+        dataIndex: 'appid',
+        key: 'appid',
     },
     {
         title: '用户名',
-        dataIndex: 'playername',
-        key: 'playername',
+        dataIndex: 'name',
+        key: 'name',
     },
     {
-        title: '订单名',
-        dataIndex: 'ordername',
-        key: 'ordername',
+        title: '金额',
+        dataIndex: 'money',
+        key: 'money',
+    },
+    {
+        title: '访问次数',
+        dataIndex: 'loginNum',
+        key: 'loginNum',
+    },
+    {
+        title: '最后登陆时间',
+        dataIndex: 'date',
+        key: 'date',
     },
 ];
 
@@ -50,7 +45,7 @@ interface order {
     percentage: string,
     percentageNum: number,
     points: number,
-    pointsShare: string,
+    allpoints: string,
     sitename: string,
 }
 
@@ -59,13 +54,14 @@ const Task = () => {
     useEffect(() => {
         axios({
             method: 'post',
-            url: '/tasks/myorders',
+            url: '/tasks/taskplayers',
         }).then(res => {
             console.log(res.data)
             if (res.data.code === 0) {
                 let result = res.data.result
                 result.forEach((n: order) => {
                     n.percentageNum = parseInt(n.percentage)
+                    n.allpoints = (n.points * 100 / n.percentageNum).toFixed(1)
                     n.percentage += '%'
                 })
                 setData(result)

@@ -15,17 +15,7 @@ const columns = [
         key: 'sitename',
     },
     {
-        title: '比例',
-        dataIndex: 'percentage',
-        key: 'percentage',
-    },
-    {
         title: '我的积分',
-        dataIndex: 'pointsShare',
-        key: 'pointsShare',
-    },
-    {
-        title: '用户积分',
         dataIndex: 'points',
         key: 'points',
     },
@@ -59,7 +49,7 @@ const Task = () => {
     useEffect(() => {
         axios({
             method: 'post',
-            url: '/tasks/myorders',
+            url: '/tasks/myorders2',
         }).then(res => {
             console.log(res.data)
             if (res.data.code === 0) {

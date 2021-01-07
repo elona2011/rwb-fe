@@ -28,8 +28,8 @@ const Login = () => {
         let data = new FormData()
         data.append('sitename', sitename)
         data.append('QICQ', QICQ)
-        data.append('balanceName', balanceName)
-        data.append('balanceRate', balanceRate)
+        data.append('balanceName', '积分')
+        data.append('balanceRate', '100')
         data.append('percentage', percentage)
         axios({
             method: 'post',
@@ -84,7 +84,7 @@ const Login = () => {
             >
                 <Input placeholder="请输入你的QQ"/>
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
                 label="虚拟币单位"
                 name="balanceName"
                 rules={[{ required: true, message: '请输入虚拟币单位!' }]}
@@ -97,7 +97,7 @@ const Login = () => {
                 rules={[{ required: true, message: '请输入虚拟币兑换比!' }]}
             >
                 <Input />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
                 label="用户分成比例"
                 name="percentage"

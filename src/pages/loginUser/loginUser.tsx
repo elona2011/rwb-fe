@@ -13,32 +13,35 @@ import {
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 
+
 const Login = () => {
     let auth = useAuth()
     let history = useHistory()
 
-    const onFinish = ({ username, password, captcha }: { username: string, password: string, captcha: string }) => {
-        auth.signin(username, password, captcha, () => {
-            history.push('/user/taskboard')
-        }, (d: string) => {
-            message.error(d)
+    const onFinish = ({ username, password }: { username: string, password: string }) => {
+        let data = new FormData()
+        data.append('name', username)
+        data.append('password', password)
+        let params = new URL(document.location.href).searchParams
+        const appid = params.get('appid')
+        axios({
+            method: 'post',
+            url: '/tasks/loginuser',
+            data,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => {
+            // console.log(res.data)
+            if (res.data) {
+                if (res.data.code === 1) {
+                    message.error('密码错误')
+                } else if (res.data.code === 0) {
+                    document.location.href = `http://proxy.xlcmll.top:36912/Task/${appid}?uid=${res.data.result}`
+                }
+            }
         })
     };
-    let [captchaimg, setCaptchaimg] = useState<string>()
-    useEffect(() => {
-        axios.get('/tasks/getcaptcha', {
-            responseType: 'blob'
-        }).then(res => {
-            setCaptchaimg(URL.createObjectURL(res.data))
-        })
-    }, [])
-    const refresh = () => {
-        axios.get('/tasks/refreshcaptcha', {
-            responseType: 'blob'
-        }).then(res => {
-            setCaptchaimg(URL.createObjectURL(res.data))
-        })
-    }
 
     return (
         <Form
@@ -64,22 +67,6 @@ const Login = () => {
                 />
             </Form.Item>
 
-            {(captchaimg && <Form.Item label="验证码">
-                <Row gutter={8}>
-                    <Col span={12}>
-                        <Form.Item
-                            name="captcha"
-                            noStyle
-                            rules={[{ required: true, message: '请输入验证码' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <img src={captchaimg} onClick={refresh}></img>
-                    </Col>
-                </Row>
-            </Form.Item>)}
             {/* <Form.Item>
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                     <Checkbox>Remember me</Checkbox>
@@ -92,8 +79,9 @@ const Login = () => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
-                    登陆
+                    登陆/注册
             </Button>
+                <p style={{ color: 'red' }}>请使用固定的账号密码登陆，新账号将自动注册并登陆!</p>
                 {/* Or <a href="">register now!</a> */}
             </Form.Item>
         </Form>
