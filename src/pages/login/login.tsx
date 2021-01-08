@@ -127,7 +127,7 @@ const Login = () => {
             </Form.Item>
             <Form.Item>
                 <Button type="primary" className="login-form-button" onClick={register}>
-                    注册（需要邀请码）
+                    注册（先填入账号和密码，再点注册）
                 </Button>
                 {/* Or <a href="">register now!</a> */}
             </Form.Item>
