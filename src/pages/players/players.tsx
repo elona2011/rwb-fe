@@ -16,8 +16,8 @@ const columns = [
     },
     {
         title: '用户名',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'uid',
+        key: 'uid',
     },
     {
         title: '金额',

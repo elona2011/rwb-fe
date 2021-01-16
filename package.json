@@ -27,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": ".",
   "proxy": "http://zrb.xlcmll.top:36912",
   "eslintConfig": {
     "extends": [
