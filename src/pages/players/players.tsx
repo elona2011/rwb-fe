@@ -2,8 +2,9 @@ import { MouseEvent, useEffect, useState } from 'react'
 import { Table, Tag, Space, Button } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { ColumnType } from "antd/lib/table/interface";
 
-const columns = [
+const columns: ColumnType<order>[] = [
     {
         title: '任务名',
         dataIndex: 'sitename',
@@ -33,6 +34,9 @@ const columns = [
         title: '最后登陆时间',
         dataIndex: 'date',
         key: 'date',
+        sortDirections: ['descend'],
+        defaultSortOrder: 'descend',
+        sorter: (a: order, b: order) => a.date.localeCompare(b.date),
     },
 ];
 
